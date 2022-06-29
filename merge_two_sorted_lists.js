@@ -1,3 +1,8 @@
+function ListNode(val, next) {
+      this.val = (val===undefined ? 0 : val)
+      this.next = (next===undefined ? null : next)
+}
+
 let mySolution = function(list1, list2) {
   let head1 = list1;
   let head2 = list2;
