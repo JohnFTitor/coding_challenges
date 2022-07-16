@@ -3,45 +3,29 @@
  * @return {string}
  */
 
-var isPalindrome = function(word) {
-    const wordReversed = word.split('').reverse().join('');
-    return word === wordReversed;
+var getPalindrome = function(left, right, word) {
+    while(left >= 0 && right < word.length) {
+        if (word[left] !== word[right]) break;
+        left -= 1;
+        right += 1;
+    }
+    
+    return [left + 1, right];
 };
 
 var longestPalindrome = function(s) {
+    let longestSubstr = [0, 1];
     
-    let longestSubstring = s[0];
-    
-    const map = new Map();
-    
-    s.split('').forEach((char, index) => {
-        const arr = map.get(char);
+    for (let i = 0; i < s.length; i++) {
         
-        if (arr === undefined) {
-            map.set(char, [index]); 
-        } else {
-            arr.push(index);
-            map.set(char, arr);
-        }
-    });
+        const odd = getPalindrome(i - 1, i + 1, s);
+        const even = getPalindrome(i - 1, i, s);
         
-    map.forEach((arr) => {
-        if (arr.length > 1) {
-            for(let i = 0; i < arr.length - 1; i++) {
-                for (let j = 1; j < arr.length; j++) {
-                   const currentSubstring = s.slice(arr[i], arr[j] + 1);
-                    if (currentSubstring.length < longestSubstring.length) {
-                        continue;
-                    }
-                    if (isPalindrome(currentSubstring)) {
-                        if (currentSubstring.length > longestSubstring.length) {
-                            longestSubstring = currentSubstring;
-                        }
-                    }      
-                } 
-            }
-        }    
-    });
+        const currentSubstr = odd[1] - odd[0] > even[1] - even[0] ? odd : even;
+        
+        longestSubstr = longestSubstr[1] - longestSubstr[0] > currentSubstr[1] - currentSubstr[0] ? longestSubstr : currentSubstr;
+        
+    }
     
-    return longestSubstring
+    return s.slice(longestSubstr[0], longestSubstr[1]);
 };
