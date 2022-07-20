@@ -27,7 +27,6 @@ var findMedianSortedArrays = function(nums1, nums2) {
     
     const size = resultArray.length;
     const midPoint = Math.floor(size / 2);
-    console.log(midPoint);
     let median = 0;
     
     if (size % 2 === 0) {
