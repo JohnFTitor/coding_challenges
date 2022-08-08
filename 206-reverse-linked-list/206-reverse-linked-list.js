@@ -9,7 +9,8 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var reverseList = function(head) {
+
+const iterativelySolution = () => {
     const stack = [];
     let current = head;
     const resultHead = new ListNode('Head');
@@ -31,4 +32,19 @@ var reverseList = function(head) {
     }
     
     return resultHead.next;
+}
+
+const recursiveSolution = (head) => {
+    if (!head || !head.next) return [head, head];
+    
+    const nextNode = head.next;
+    head.next = null;
+    const [resultNode, resultHead] = recursiveSolution(nextNode);
+    resultNode.next = head;
+    
+    return [resultNode.next, resultHead];
+}
+
+var reverseList = function(head) {
+    return recursiveSolution(head)[1];
 };
